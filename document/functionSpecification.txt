@@ -1,0 +1,20 @@
+Account
+	Join
+	Login
+	GetAccount
+	Logout
+	Edit
+	Withdraw
+Board
+	WritePost
+	EditPost
+	RemovePost
+	GetPostList
+	GetPost
+	GetComments
+	GetSpecialPost
+Search
+	GetFoodIngredient
+	Search
+Etc
+	GetApplicationVersion
