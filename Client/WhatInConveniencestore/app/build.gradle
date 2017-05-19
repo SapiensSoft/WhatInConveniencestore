@@ -36,8 +36,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.github.yalantis:Side-Menu.Android:1.0.1'
-    compile ('com.github.ozodrukh:CircularReveal:1.1.1@aar'){
-        transitive = true;
-    }
+    compile 'com.github.ozodrukh:CircularReveal:1.0.4'
+//    compile 'com.github.yalantis:Side-Menu.Android:1.0.1'
+//    compile ('com.github.ozodrukh:CircularReveal:1.1.1@aar'){
+//        transitive = true;
+//    }
+    compile project(path: ':library')
 }

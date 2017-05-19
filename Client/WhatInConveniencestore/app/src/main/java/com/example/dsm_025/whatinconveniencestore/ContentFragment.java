@@ -58,7 +58,7 @@ public class ContentFragment extends Fragment implements ScreenShotable {
         mImgaeView = (ImageView) rootView.findViewById(R.id.image_content);
         mImgaeView.setClickable(true);
         mImgaeView.setFocusable(true);
-        mImgaeView.setImageResource(res);
+//        mImgaeView.setImageResource(res);
         return rootView;
     }
 

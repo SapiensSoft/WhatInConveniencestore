@@ -4,8 +4,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/conteiner_frame"
+        <io.codetail.widget.RevealFrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/container_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -25,8 +26,21 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize" />
+                android:background="#FFFFFF"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:minHeight="?attr/actionBarSize" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:text="WIC"
+                    android:textSize="26sp"
+                    android:layout_gravity="center"
+                    android:id="@+id/toolbar_title" />
+
+            </android.support.v7.widget.Toolbar>
 
         </io.codetail.widget.RevealFrameLayout>
 
@@ -43,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
                 android:orientation="vertical">
                 <!-- Layout of Drawer -->
             </LinearLayout>

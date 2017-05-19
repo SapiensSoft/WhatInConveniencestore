@@ -4,7 +4,12 @@ import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.example.dsm_025.whatinconveniencestore.databinding.ActivityMainBinding;
@@ -26,7 +32,8 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
-public class MainActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener{
+public class MainActivity extends
+        ActionBarActivity implements ViewAnimator.ViewAnimatorListener{
     ActivityMainBinding binding;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
     private ViewAnimator viewAnimator;
     private int res = R.drawable.music;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
                 .replace(R.id.content_frame, contentFagment)
                 .commit();
         binding.drawerLayout.setScrimColor(Color.TRANSPARENT);
+        binding.leftDrawer.setDrawingCacheBackgroundColor(Color.RED);
         binding.leftDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,25 +61,28 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
 
         setActionBar();
         createMenuList();
-        viewAnimator = new ViewAnimator(this, list, contentFagment, binding.drawerLayout, this);
+        viewAnimator = new ViewAnimator<>(this, list, contentFagment, binding.drawerLayout, this);
+
+        Window window = this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
     }
 
     private void createMenuList(){
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.music);
+        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.ic_launcher_round);
         list.add(menuItem0);
-        SlideMenuItem menuItem1 = new SlideMenuItem(ContentFragment.BUILDING, R.drawable.menu_item_selector);
+        SlideMenuItem menuItem1 = new SlideMenuItem(ContentFragment.BUILDING, R.drawable.ic_home_outline_white_48dp);
         list.add(menuItem1);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.drawable.item_down);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.drawable.ic_pot_mix_white_48dp);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.drawable.item_up);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.drawable.ic_home_outline_grey600_48dp);
         list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.drawable.music);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.drawable.ic_pot_mix_grey600_48dp);
         list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.drawable.music);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.mipmap.ic_launcher_round);
         list.add(menuItem5);
-        SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.drawable.music);
+        SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.mipmap.ic_launcher_round);
         list.add(menuItem6);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.drawable.music);
+        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.mipmap.ic_launcher_round);
         list.add(menuItem7);
     }
 
@@ -89,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 binding.leftDrawer.removeAllViews();
-                binding.invalidateAll();
+                binding.leftDrawer.invalidate();
             }
 
             @Override
@@ -98,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
                 if(slideOffset > 0.6 && binding.leftDrawer.getChildCount() == 0){
                     viewAnimator.showMenuContent();
                 }
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
             }
         };
         binding.drawerLayout.setDrawerListener(drawerToggle);
