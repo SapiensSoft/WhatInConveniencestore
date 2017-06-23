@@ -8,10 +8,17 @@ import yalantis.com.sidemenu.interfaces.Resourceble;
 public class SlideMenuItem implements Resourceble {
     private String name;
     private int imageRes;
+    private boolean clickable;
 
     public SlideMenuItem(String name, int imageRes) {
         this.name = name;
         this.imageRes = imageRes;
+    }
+
+    public SlideMenuItem(String name, int imageRes, boolean clickable) {
+        this.name = name;
+        this.imageRes = imageRes;
+        this.clickable = clickable;
     }
 
     public String getName() {
@@ -28,5 +35,13 @@ public class SlideMenuItem implements Resourceble {
 
     public void setImageRes(int imageRes) {
         this.imageRes = imageRes;
+    }
+
+    public boolean isClickable() {
+        return clickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
     }
 }

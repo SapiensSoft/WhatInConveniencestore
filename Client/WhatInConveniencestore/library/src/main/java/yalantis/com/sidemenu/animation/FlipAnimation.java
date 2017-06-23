@@ -49,7 +49,5 @@ public class FlipAnimation extends Animation {
 
         matrix.preTranslate(-centerX, -centerY);
         matrix.postTranslate(centerX, centerY);
-
     }
-
 }

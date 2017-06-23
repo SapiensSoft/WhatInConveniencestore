@@ -2,4 +2,5 @@
     <string name="app_name">WIC</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="button">버튼</string>
 </resources>

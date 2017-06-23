@@ -54,15 +54,19 @@ public class ViewAnimator<T extends Resourceble> {
         for (int i = 0; i < size; i++) {
             View viewMenu = appCompatActivity.getLayoutInflater().inflate(R.layout.menu_list_item, null);
 
+
+
             final int finalI = i;
-            viewMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int[] location = {0, 0};
-                    v.getLocationOnScreen(location);
-                    switchItem(list.get(finalI), location[1] + v.getHeight() / 2);
-                }
-            });
+            if(list.get(i).isClickable()) {
+                viewMenu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int[] location = {0, 0};
+                        v.getLocationOnScreen(location);
+                        switchItem(list.get(finalI), location[1] + v.getHeight() / 2);
+                    }
+                });
+            }
             ((ImageView) viewMenu.findViewById(R.id.menu_item_image)).setImageResource(list.get(i).getImageRes());
             viewMenu.setVisibility(View.GONE);
             viewMenu.setEnabled(false);

@@ -1,32 +1,26 @@
 package com.example.dsm_025.whatinconveniencestore;
 
+import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.example.dsm_025.whatinconveniencestore.databinding.ActivityMainBinding;
+import com.example.dsm_025.whatinconveniencestore.fragment.CombinationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
 import yalantis.com.sidemenu.interfaces.Resourceble;
 import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
@@ -41,7 +35,7 @@ public class MainActivity extends
     private ViewAnimator viewAnimator;
     private int res = R.drawable.music;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,21 +62,21 @@ public class MainActivity extends
     }
 
     private void createMenuList(){
-        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.ic_launcher_round);
+        SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.drawable.ic_close_white_48dp, true);
         list.add(menuItem0);
-        SlideMenuItem menuItem1 = new SlideMenuItem(ContentFragment.BUILDING, R.drawable.ic_home_outline_white_48dp);
+        SlideMenuItem menuItem1 = new SlideMenuItem(ContentFragment.HOME, R.drawable.ic_home_outline_white_48dp, true);
         list.add(menuItem1);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.drawable.ic_pot_mix_white_48dp);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.POT, R.drawable.ic_pot_mix_white_48dp, true);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.drawable.ic_home_outline_grey600_48dp);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.SEARCH, R.drawable.ic_magnify_white_48dp, true);
         list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.drawable.ic_pot_mix_grey600_48dp);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.drawable.ic_format_list_numbers_white_48dp, true);
         list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.mipmap.ic_launcher_round);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.drawable.ic_account_white_48dp, true);
         list.add(menuItem5);
-        SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.mipmap.ic_launcher_round);
+        SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.drawable.item_up, false);
         list.add(menuItem6);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.mipmap.ic_launcher_round);
+        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.drawable.item_up, false);
         list.add(menuItem7);
     }
 
@@ -90,6 +84,7 @@ public class MainActivity extends
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         drawerToggle = new ActionBarDrawerToggle(
                 this,
                 binding.drawerLayout,
@@ -150,26 +145,32 @@ public class MainActivity extends
     }
 
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition){
-        this.res = this.res == R.drawable.music ? R.drawable.music : R.drawable.music;
-        View view = findViewById(R.id.content_frame);
-        int finalRadius = Math.max(view.getWidth(), view.getHeight());
-        SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0,topPosition, 0, finalRadius);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
-
-        findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
-        animator.start();
-        ContentFragment contentFagment = ContentFragment.newInstance(this.res);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFagment).commit();
+//        View view = findViewById(R.id.content_frame);
+//        int finalRadius = Math.max(view.getWidth(), view.getHeight());
+//        SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0,topPosition, 0, finalRadius);
+//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
+//
+//        findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
+//        animator.start();
+//        ContentFragment contentFagment = ContentFragment.newInstance(this.res);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFagment).addToBackStack(null).commit();
         return contentFagment;
     }
 
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
+        //TODO 여기서 Fragment 전환 작업 하기
         switch (slideMenuItem.getName()){
             case ContentFragment.CLOSE:
                 return screenShotable;
+            case ContentFragment.POT:
+                CombinationFragment fragment = new CombinationFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+                return screenShotable;
             default:
+                ContentFragment contentFragment = ContentFragment.newInstance(this.res);
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).addToBackStack(null).commit();
                 return replaceFragment(screenShotable, position);
         }
     }

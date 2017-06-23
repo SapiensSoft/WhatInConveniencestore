@@ -7,4 +7,6 @@ public interface Resourceble {
     public int getImageRes();
 
     public String getName();
+
+    public boolean isClickable();
 }

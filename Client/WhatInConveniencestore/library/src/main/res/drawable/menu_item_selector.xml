@@ -3,5 +3,6 @@
     <item android:state_pressed="true" android:drawable="@drawable/item_down"/>
     <item android:state_selected="true" android:drawable="@drawable/item_down"/>
     <item android:state_focused="true" android:drawable="@drawable/item_down"/>
-    <item android:drawable="@drawable/item_up"/>
+    <item android:drawable="@drawable/brown"/>
+    <!--<item android:drawable="@drawable/item_up"/>-->
 </selector>
