@@ -26,41 +26,42 @@
         android:elevation="6dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout"
-        android:orientation="vertical">
-        <RelativeLayout
+        android:layout_below="@+id/tab_layout">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="3"
-            android:layout_below="@id/tab_layout"
-            android:layout_height="match_parent">
-            <android.support.v4.view.ViewPager
-                android:id="@+id/firstPager"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/top_layout"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent" />
-            <android.support.v4.view.ViewPager
-                android:id="@+id/secondPager"
-                android:visibility="invisible"
+                android:layout_weight="3"
+                android:layout_below="@id/tab_layout"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/food_item_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom_layout"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent" />
-        </RelativeLayout>
+                android:layout_weight="2"
+                android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/bottom_layout"
-            android:layout_width="match_parent"
-            android:layout_weight="2"
-            android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/img_dish"
+                    android:src="@drawable/ic_dish"
+                    android:layout_centerInParent="true"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp" />
 
-            <ImageView
-                android:id="@+id/img_dish"
-                android:src="@drawable/ic_dish"
-                android:layout_centerInParent="true"
-                android:layout_width="240dp"
-                android:layout_height="240dp" />
-
-        </RelativeLayout>
-    </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

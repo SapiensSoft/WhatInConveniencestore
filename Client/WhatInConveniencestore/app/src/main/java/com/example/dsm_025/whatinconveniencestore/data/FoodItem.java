@@ -15,10 +15,10 @@ public class FoodItem {
     private boolean visibleState;
     private Drawable foodImageDrawable;
 
-    public FoodItem(Drawable foodImageResource, boolean visibleState) {
+    public FoodItem(Drawable foodImageResource, String name ,boolean visibleState) {
         this.foodImageDrawable = foodImageResource;
         this.visibleState = visibleState;
-
+        this.name = name;
     }
 
     public boolean isVisibleState() {
