@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import com.example.dsm_025.whatinconveniencestore.data.CategoryItem;
 import com.example.dsm_025.whatinconveniencestore.databinding.ActivityMainBinding;
+import com.example.dsm_025.whatinconveniencestore.fragment.CategoryFragment;
 import com.example.dsm_025.whatinconveniencestore.fragment.CombinationFragment;
 
 import java.util.ArrayList;
@@ -167,6 +169,10 @@ public class MainActivity extends
             case ContentFragment.POT:
                 CombinationFragment fragment = new CombinationFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+                return screenShotable;
+            case ContentFragment.SEARCH:
+                CategoryFragment categoryFragment=new CategoryFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,categoryFragment).addToBackStack(null).commit();
                 return screenShotable;
             default:
                 ContentFragment contentFragment = ContentFragment.newInstance(this.res);

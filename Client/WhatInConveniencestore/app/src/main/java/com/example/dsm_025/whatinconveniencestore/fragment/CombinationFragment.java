@@ -8,9 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,11 +19,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.dsm_025.whatinconveniencestore.R;
 import com.example.dsm_025.whatinconveniencestore.adapter.CombinationFoodItemAdapter;
 import com.example.dsm_025.whatinconveniencestore.data.FoodItem;
+import com.example.dsm_025.whatinconveniencestore.manager.ItemGridLayoutManager;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class CombinationFragment extends Fragment {
     private TabLayout kindTab;
     private RelativeLayout topLayout;
     private RelativeLayout bottomLayout;
-    private GridLayoutManager gridLayoutManager;
+    private ItemGridLayoutManager gridLayoutManager;
     private WindowManager wm;
     private WindowManager.LayoutParams wmParams;
     private ImageView dragView;
@@ -56,6 +56,7 @@ public class CombinationFragment extends Fragment {
         foodItemList = new ArrayList<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,11 +67,12 @@ public class CombinationFragment extends Fragment {
         return rootView;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void init() {
         kindTab = (TabLayout) rootView.findViewById(R.id.tab_layout);
         mImgDish = (ImageView) rootView.findViewById(R.id.img_dish);
 
-        gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        gridLayoutManager = new ItemGridLayoutManager(getActivity(), 2);
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         foodItemRecyclerView = (RecyclerView) rootView.findViewById(R.id.food_item_recycler);
         foodItemRecyclerView.setHasFixedSize(true);
@@ -94,10 +96,29 @@ public class CombinationFragment extends Fragment {
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거",true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거",true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거",true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
         }});
 
         foodItemRecyclerView.setAdapter(adapter);
-
         kindTab.setOnTabSelectedListener(kindTabSelectListener);
         mImgDish.setOnClickListener(dishClickListener);
         adapter.setmOnItemClickListener(onItemClickListener);
@@ -127,6 +148,8 @@ public class CombinationFragment extends Fragment {
                         dragView.setY(event.getY());
 
                     case MotionEvent.ACTION_MOVE:
+                        gridLayoutManager.setScrollEnabled(false);
+                        Log.d("onTouch: ", foodItemRecyclerView.getScrollX() + ", " + foodItemRecyclerView.getScrollY());
                         wmParams.x = (int) (event.getRawX() + dragOffsetX);
                         wmParams.y = (int) (event.getRawY() + dragOffsetY);
                         dragView.setX(event.getX() - dragView.getWidth() / 2);
@@ -140,6 +163,7 @@ public class CombinationFragment extends Fragment {
 //                    wm.updateViewLayout(dragView, wmParams);
                         break;
                     case MotionEvent.ACTION_UP:
+                        gridLayoutManager.setScrollEnabled(true);
                         if (Math.pow((itemX), 2) + Math.pow((itemY), 2) < Math.pow(mImgDish.getWidth() / 2, 2)) {
                             mImgDish.setImageDrawable(getResources().getDrawable(R.drawable.ic_dish));
 //                        bottomLayout.addView();
@@ -151,7 +175,6 @@ public class CombinationFragment extends Fragment {
                         }
                         dragView = null;
                         break;
-
                     default:
                         break;
                 }
