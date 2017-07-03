@@ -1,6 +1,9 @@
 package com.example.dsm_025.whatinconveniencestore.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PaintDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,18 +26,10 @@ public class CategoryItemListAdapter extends RecyclerView.Adapter<CategoryItemLi
     private ArrayList<CategoryItem> itemList;
     private Context context;
 
-    public interface OnItemClickListener {
-        void onItemClicked(FoodItem item, MotionEvent event);
-    }
-    public  CategoryItemListAdapter.OnItemClickListener CategoryItemListener;
 
-    public  void setmOnItemClickListener(CombinationFoodItemAdapter.OnItemClickListener onItemClickListener){
-        onItemClickListener= onItemClickListener;
-    }
-
-    public CategoryItemListAdapter(Context context,ArrayList itemList) {
-        this.context=context;
-        this.itemList=itemList;
+    public CategoryItemListAdapter(final Context context, final ArrayList itemList) {
+        this.context = context;
+        this.itemList = itemList;
     }
 
     @Override
@@ -44,10 +39,22 @@ public class CategoryItemListAdapter extends RecyclerView.Adapter<CategoryItemLi
         return viewHolder;
     }
 
+
+
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final CategoryItem item = itemList.get(position);
+
         holder.imageView.setImageResource(itemList.get(position).getDrawable());
         holder.itemName.setText(itemList.get(position).getItemName());
+        holder.itemView.setBackgroundColor(item.isState() ? Color.BLUE: Color.WHITE);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.setState(!item.isState());
+                notifyDataSetChanged();
+            }
+        });
     }
 
 

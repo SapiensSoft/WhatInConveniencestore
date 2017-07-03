@@ -9,10 +9,12 @@ import android.graphics.drawable.Drawable;
 public class CategoryItem {
     private String itemName;
     private int drawable;
+    private  boolean state;
 
-    public CategoryItem(String name,int drawable){
+    public CategoryItem(String name,int drawable,boolean state){
         this.drawable=drawable;
         this.itemName=name;
+        this.state=state;
     }
 
     public String getItemName() {
@@ -29,6 +31,14 @@ public class CategoryItem {
 
     public void setDrawable(int drawable) {
         this.drawable = drawable;
+    }
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 
 }

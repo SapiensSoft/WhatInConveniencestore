@@ -17,6 +17,7 @@ import com.example.dsm_025.whatinconveniencestore.R;
 import com.example.dsm_025.whatinconveniencestore.adapter.CategoryItemListAdapter;
 import com.example.dsm_025.whatinconveniencestore.data.CategoryItem;
 import com.example.dsm_025.whatinconveniencestore.data.FoodItem;
+import com.example.dsm_025.whatinconveniencestore.utile.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,10 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_category, container, false);
         wm = getActivity().getWindowManager();
+/*
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+*/
+
         wmParams = new WindowManager.LayoutParams();
         init();
         return rootView;
@@ -64,24 +69,19 @@ public class CategoryFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         categoryItemListAdapter=new CategoryItemListAdapter(getActivity(),new ArrayList(){{
-            add(new CategoryItem("김밥류",R.drawable.rice_ball_with_seaweed));
-            add(new CategoryItem("육류",R.drawable.chicken_leg));
-            add(new CategoryItem("면류",R.drawable.noodles));
-            add(new CategoryItem("아이스크림류",R.drawable.ice_cream));
-            add(new CategoryItem("과자류",R.drawable.biscuit));
-            add(new CategoryItem("음료류",R.drawable.orange_juice));
+            add(new CategoryItem("김밥류",R.drawable.rice_ball_with_seaweed,false));
+            add(new CategoryItem("육류",R.drawable.chicken_leg,false));
+            add(new CategoryItem("면류",R.drawable.noodles,false));
+            add(new CategoryItem("아이스크림류",R.drawable.ice_cream,false));
+            add(new CategoryItem("과자류",R.drawable.biscuit,false));
+            add(new CategoryItem("음료류",R.drawable.orange_juice,false));
         }});
 
         recyclerView.setAdapter(categoryItemListAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         kindTab.setOnTabSelectedListener(kindTabSelectListener);
     }
 
-    CategoryItemListAdapter.OnItemClickListener clickListener= new CategoryItemListAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClicked(FoodItem item, MotionEvent event) {
-
-        }
-    };
 
     private CategoryItem getItemFromDrawable(int image){
         for(CategoryItem categoryItem :itemList ){
