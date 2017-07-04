@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -123,6 +124,7 @@ public class CombinationFragment extends Fragment {
         mImgDish.setOnClickListener(dishClickListener);
         adapter.setmOnItemClickListener(onItemClickListener);
         foodItemRecyclerView.setOnTouchListener(foodItemTouchListener);
+        foodItemRecyclerView.setOnLongClickListener(foodItemLongTouchListener);
     }
 
     private FoodItem getItemFromDrawable(Drawable drawable){
@@ -134,6 +136,15 @@ public class CombinationFragment extends Fragment {
         return null;
     }
 
+    View.OnLongClickListener foodItemLongTouchListener = new View.OnLongClickListener(){
+        @Override
+        public boolean onLongClick(View v) {
+            FragmentManager manager = getFragmentManager();
+            FoodInformationDialogFragment foodInformationDialog = new FoodInformationDialogFragment();
+            foodInformationDialog.show(manager, "fragment");
+            return false;
+        }
+    };
     View.OnTouchListener foodItemTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -144,22 +155,28 @@ public class CombinationFragment extends Fragment {
             if(dragView != null) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        dragView.setX(event.getX());
-                        dragView.setY(event.getY());
-
+//                        dragView.setX(event.getX());
+//                        dragView.setY(event.getY());
+                        Bundle args = new Bundle();
+                        args.putString("name", "참치 마요 타코");
+                        args.putString("price", "5600원");
+                        args.putString("writer", "hangole");
+                        DialogFragment fragment = new FoodInformationDialogFragment();
+                        fragment.setArguments(args);
+                        fragment.show(getFragmentManager(), "Search Filter");
                     case MotionEvent.ACTION_MOVE:
-                        gridLayoutManager.setScrollEnabled(false);
-                        Log.d("onTouch: ", foodItemRecyclerView.getScrollX() + ", " + foodItemRecyclerView.getScrollY());
-                        wmParams.x = (int) (event.getRawX() + dragOffsetX);
-                        wmParams.y = (int) (event.getRawY() + dragOffsetY);
-                        dragView.setX(event.getX() - dragView.getWidth() / 2);
-                        dragView.setY(event.getY() - dragView.getHeight() / 2);
-
-                        if (Math.pow((itemX), 2) + Math.pow((itemY), 2) < Math.pow(mImgDish.getWidth() / 2, 2)) {
-                            mImgDish.setImageDrawable(getResources().getDrawable(R.drawable.dish_selected));
-                        } else {
-                            mImgDish.setImageDrawable(getResources().getDrawable(R.drawable.ic_dish));
-                        }
+//                        gridLayoutManager.setScrollEnabled(false);
+//                        Log.d("onTouch: ", foodItemRecyclerView.getScrollX() + ", " + foodItemRecyclerView.getScrollY());
+//                        wmParams.x = (int) (event.getRawX() + dragOffsetX);
+//                        wmParams.y = (int) (event.getRawY() + dragOffsetY);
+//                        dragView.setX(event.getX() - dragView.getWidth() / 2);
+//                        dragView.setY(event.getY() - dragView.getHeight() / 2);
+//
+//                        if (Math.pow((itemX), 2) + Math.pow((itemY), 2) < Math.pow(mImgDish.getWidth() / 2, 2)) {
+//                            mImgDish.setImageDrawable(getResources().getDrawable(R.drawable.dish_selected));
+//                        } else {
+//                            mImgDish.setImageDrawable(getResources().getDrawable(R.drawable.ic_dish));
+//                        }
 //                    wm.updateViewLayout(dragView, wmParams);
                         break;
                     case MotionEvent.ACTION_UP:
