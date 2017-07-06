@@ -17,10 +17,10 @@ import android.view.Window;
 
 import com.example.dsm_025.whatinconveniencestore.ContentFragment;
 import com.example.dsm_025.whatinconveniencestore.R;
-import com.example.dsm_025.whatinconveniencestore.data.CategoryItem;
 import com.example.dsm_025.whatinconveniencestore.databinding.ActivityMainBinding;
 import com.example.dsm_025.whatinconveniencestore.fragment.CategoryFragment;
 import com.example.dsm_025.whatinconveniencestore.fragment.CombinationFragment;
+import com.example.dsm_025.whatinconveniencestore.fragment.PostingFragment;
 import com.example.dsm_025.whatinconveniencestore.fragment.ProfileFragment;
 
 import java.util.ArrayList;
@@ -180,6 +180,9 @@ public class MainActivity extends
             case ContentFragment.SHOP:
                 ProfileFragment fragment1 = new ProfileFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment1).addToBackStack(null).commit();
+            case ContentFragment.CASE:
+                PostingFragment postingFragment = new PostingFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,postingFragment).addToBackStack(null).commit();
                 return screenShotable;
             default:
                 ContentFragment contentFragment = ContentFragment.newInstance(this.res);
