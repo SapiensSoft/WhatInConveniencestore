@@ -49,7 +49,6 @@ public class CategoryFragment extends Fragment {
 /*
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 */
-
         wmParams = new WindowManager.LayoutParams();
         init();
         return rootView;
