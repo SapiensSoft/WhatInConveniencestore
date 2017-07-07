@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 import com.example.dsm_025.whatinconveniencestore.R;
 import com.example.dsm_025.whatinconveniencestore.adapter.CombinationFoodItemAdapter;
 import com.example.dsm_025.whatinconveniencestore.data.FoodItem;
+import com.example.dsm_025.whatinconveniencestore.listener.RecyclerItemClickListener;
 import com.example.dsm_025.whatinconveniencestore.manager.ItemGridLayoutManager;
 
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ public class CombinationFragment extends Fragment {
     private CombinationFoodItemAdapter adapter;
     private float dragOffsetX = -50;
     private float dragOffsetY = -50;
-
+    private boolean longClickState;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,26 +87,11 @@ public class CombinationFragment extends Fragment {
         kindTab.addTab(kindTab.newTab().setText("Tab 2"));
         kindTab.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        adapter = new CombinationFoodItemAdapter(getActivity(), new ArrayList<FoodItem>(){{
+        adapter = new CombinationFoodItemAdapter(getActivity(), new ArrayList<FoodItem>() {{
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거",true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거",true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
@@ -114,25 +101,93 @@ public class CombinationFragment extends Fragment {
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
-            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거",true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_android_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_pot_mix_black_24dp), "햄버거", true));
+            add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_18dp), "햄버거", true));
             add(new FoodItem(getResources().getDrawable(R.drawable.ic_home_outline_black_36dp), "햄버거", true));
         }});
 
         foodItemRecyclerView.setAdapter(adapter);
         kindTab.setOnTabSelectedListener(kindTabSelectListener);
         mImgDish.setOnClickListener(dishClickListener);
-        adapter.setmOnItemClickListener(onItemClickListener);
         foodItemRecyclerView.setOnTouchListener(foodItemTouchListener);
+        foodItemRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), foodItemRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onLongItemClick(View v, int position) {
+                FoodItem item = adapter.getItem(position);
+                adapter.setItemVisible(item, false);
+
+                foodItemList.add(item);
+                System.out.println("X : " + v.getX() + " Y : " + v.getY());
+                selectDrawable = item.getFoodImageDrawable();
+
+                wmParams = new WindowManager.LayoutParams();
+                wmParams.gravity = Gravity.TOP | Gravity.LEFT;
+                wmParams.x = (int) (v.getX());
+                wmParams.y = (int) (v.getY());
+                wmParams.width = 160;
+                wmParams.height = 160;
+
+                wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE// 不需获取焦点
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE// 不需接受触摸事件
+                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;// 保持设备常开，并保持亮度不变。
+
+                wmParams.windowAnimations = 0;
+
+                dragView = new ImageView(getActivity());
+                dragView.setImageDrawable(selectDrawable);
+                dragView.setBackgroundColor(Color.TRANSPARENT);
+                dragView.setLayoutParams(wmParams);
+
+                rootLayout.addView(dragView);
+                dragView.setX(v.getX());
+                dragView.setY(v.getY());
+//                dragView.setX((v.getX() * rootLayout.getWidth()) / foodItemRecyclerView.getWidth());
+//                dragView.setY((v.getY() * rootLayout.getHeight()) / foodItemRecyclerView.getHeight());
+
+            }
+
+            @Override
+            public void onItemReleased(View view, int position) {
+                Bundle args = new Bundle();
+                args.putString("name", "참치 마요 타코");
+                args.putString("price", "5600원");
+                args.putString("writer", "hangole");
+                DialogFragment fragment = new FoodInformationDialogFragment();
+                fragment.setArguments(args);
+                fragment.show(getFragmentManager(), "Search Filter");
+
+            }
+
+            @Override
+            public void onTouch(View view, int position, MotionEvent event) {
+
+            }
+        }));
     }
 
-    private FoodItem getItemFromDrawable(Drawable drawable){
-        for(FoodItem foodItem : foodItemList){
-            if(foodItem.getFoodImageDrawable().equals(drawable)){
+    private FoodItem getItemFromDrawable(Drawable drawable) {
+        for (FoodItem foodItem : foodItemList) {
+            if (foodItem.getFoodImageDrawable().equals(drawable)) {
                 return foodItem;
             }
         }
         return null;
     }
+
 
     View.OnTouchListener foodItemTouchListener = new View.OnTouchListener() {
         @Override
@@ -141,12 +196,8 @@ public class CombinationFragment extends Fragment {
             float centerY = mImgDish.getY() + (mImgDish.getHeight() / 2);
             float itemX = event.getX() - centerX;
             float itemY = (event.getY() - topLayout.getHeight()) - centerY;
-            if(dragView != null) {
+            if (dragView != null) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        dragView.setX(event.getX());
-                        dragView.setY(event.getY());
-
                     case MotionEvent.ACTION_MOVE:
                         gridLayoutManager.setScrollEnabled(false);
                         Log.d("onTouch: ", foodItemRecyclerView.getScrollX() + ", " + foodItemRecyclerView.getScrollY());
@@ -160,7 +211,6 @@ public class CombinationFragment extends Fragment {
                         } else {
                             mImgDish.setImageDrawable(getResources().getDrawable(R.drawable.ic_dish));
                         }
-//                    wm.updateViewLayout(dragView, wmParams);
                         break;
                     case MotionEvent.ACTION_UP:
                         gridLayoutManager.setScrollEnabled(true);
@@ -169,7 +219,7 @@ public class CombinationFragment extends Fragment {
 //                        bottomLayout.addView();
                         } else {
                             FoodItem unSelectedItem = getItemFromDrawable(dragView.getDrawable());
-                            adapter.unSelectItem(getItemFromDrawable(dragView.getDrawable()));
+                            adapter.setItemVisible(getItemFromDrawable(dragView.getDrawable()), true);
                             rootLayout.removeView(dragView);
                             foodItemList.remove(unSelectedItem);
                         }
@@ -178,52 +228,14 @@ public class CombinationFragment extends Fragment {
                     default:
                         break;
                 }
+            } else {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                }
             }
             return false;
         }
     };
-
-    CombinationFoodItemAdapter.OnItemClickListener onItemClickListener = new CombinationFoodItemAdapter.OnItemClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        public void onItemClicked(FoodItem item, MotionEvent event) {
-            foodItemList.add(item);
-            System.out.println("X : " + event.getX() +  " Y : " + event.getY());
-            selectDrawable = item.getFoodImageDrawable();
-
-            wmParams = new WindowManager.LayoutParams();
-            wmParams.gravity = Gravity.TOP | Gravity.LEFT;
-            wmParams.x = (int) (event.getRawX() + dragOffsetX);
-            wmParams.y = (int) (event.getRawY() + dragOffsetY);
-            wmParams.width = 160;
-            wmParams.height = 160;
-
-            wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE// 不需获取焦点
-                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE// 不需接受触摸事件
-                    | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;// 保持设备常开，并保持亮度不变。
-
-            wmParams.windowAnimations = 0;
-
-            dragView = new ImageView(getActivity());
-            dragView.setImageDrawable(selectDrawable);
-            dragView.setBackgroundColor(Color.TRANSPARENT);
-            dragView.setLayoutParams(wmParams);
-
-            rootLayout.addView(dragView);
-            dragView.setX((event.getX() * rootLayout.getWidth()) / foodItemRecyclerView.getWidth());
-            dragView.setY((event.getY() * rootLayout.getHeight()) / foodItemRecyclerView.getHeight());
-//            wm.addView(dragView, wmParams);
-        }
-    };
-
-    private FoodItem getFoodItemFromDrawable(Drawable drawable) {
-        for (FoodItem item : foodItemList) {
-            if (item.getFoodImageDrawable().equals(drawable)) {
-                return item;
-            }
-        }
-        return null;
-    }
 
     View.OnClickListener dishClickListener = new View.OnClickListener() {
         @Override
