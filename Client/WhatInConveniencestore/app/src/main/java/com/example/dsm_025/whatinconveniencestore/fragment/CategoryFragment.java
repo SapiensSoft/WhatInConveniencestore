@@ -1,6 +1,5 @@
 package com.example.dsm_025.whatinconveniencestore.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,7 +14,6 @@ import android.view.WindowManager;
 import com.example.dsm_025.whatinconveniencestore.R;
 import com.example.dsm_025.whatinconveniencestore.adapter.CategoryItemListAdapter;
 import com.example.dsm_025.whatinconveniencestore.data.CategoryItem;
-import com.example.dsm_025.whatinconveniencestore.data.FoodItem;
 import com.example.dsm_025.whatinconveniencestore.utile.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -77,7 +74,7 @@ public class CategoryFragment extends Fragment {
         }});
 
         recyclerView.setAdapter(categoryItemListAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), 1));
         kindTab.setOnTabSelectedListener(kindTabSelectListener);
     }
 
