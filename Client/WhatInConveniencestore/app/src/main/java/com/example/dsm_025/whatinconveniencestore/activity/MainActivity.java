@@ -180,6 +180,7 @@ public class MainActivity extends
             case ContentFragment.SHOP:
                 ProfileFragment fragment1 = new ProfileFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment1).addToBackStack(null).commit();
+                return screenShotable;
             case ContentFragment.CASE:
                 PostingFragment postingFragment = new PostingFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,postingFragment).addToBackStack(null).commit();
