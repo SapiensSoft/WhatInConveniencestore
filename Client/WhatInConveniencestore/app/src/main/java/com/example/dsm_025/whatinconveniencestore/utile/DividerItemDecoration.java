@@ -15,7 +15,7 @@ import com.example.dsm_025.whatinconveniencestore.R;
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
-    public DividerItemDecoration(Context context){
+    public DividerItemDecoration(Context context, int i){
         mDivider=context.getResources().getDrawable(R.drawable.line_divider);
     }
 
