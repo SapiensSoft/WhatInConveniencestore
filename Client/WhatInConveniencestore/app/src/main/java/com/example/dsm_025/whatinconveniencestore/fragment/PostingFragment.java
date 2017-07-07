@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.dsm_025.whatinconveniencestore.R;
+import com.example.dsm_025.whatinconveniencestore.activity.CategorySelectActivity;
+import com.example.dsm_025.whatinconveniencestore.activity.MaterialSelectActivity;
 
 import java.util.ArrayList;
 
@@ -45,13 +47,13 @@ public class PostingFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.button1:
                         Toast.makeText(getActivity(), "버튼이 눌렸습니다2", Toast.LENGTH_SHORT).show();
-//                        Intent intent1 = new Intent(MainActivity.this, CategoryActivity.class);
-//                        startActivity(intent1);
+                        Intent intent1 = new Intent(getActivity(), CategorySelectActivity.class);
+                        startActivity(intent1);
                         break;
                     case R.id.button2:
                         Toast.makeText(getActivity(), "버튼이 눌렸습니다3", Toast.LENGTH_SHORT).show();
-//                        Intent intent2 = new Intent(MainActivity.this, MaterialActivity.class);
-//                        startActivity(intent2);
+                        Intent intent2 = new Intent(getActivity(), MaterialSelectActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.imageView:
                         Toast.makeText(getActivity(), "버튼이 눌렸습니다4", Toast.LENGTH_SHORT).show();
